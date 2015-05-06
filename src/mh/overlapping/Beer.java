@@ -62,9 +62,4 @@ public class Beer implements IAle, ILager {
 	public int getFermentationTemperature() {
 		return fermentationTemperature;
 	}
-
-	public void setFermentationTemperature(int fermentationTemperature) {
-		this.fermentationTemperature = fermentationTemperature;
-	}
-
 }
