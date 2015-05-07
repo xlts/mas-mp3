@@ -8,9 +8,28 @@ public class BeerRecipe implements IModernBeerRecipe, IHistoricBeerRecipe {
 	
 	private String origin;
 	private Date introductionDate;
+	
+	public BeerRecipe(BeerRecipeType beerRecipeType){
+		this.setBeerRecipeType(beerRecipeType);
+	}
+	
+
+	public BeerRecipeType getBeerRecipeType() {
+		return beerRecipeType;
+	}
+
+	public void setBeerRecipeType(BeerRecipeType beerRecipeType) {
+		if (beerRecipeType == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
+		this.beerRecipeType = beerRecipeType;
+	}
 
 	@Override
 	public void setOrigin(String countryName) {
+		if (countryName == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
 		if (beerRecipeType != BeerRecipeType.HISTORIC) {
 			throw new RuntimeException("Not a historic beer recipe");
 		}
@@ -35,6 +54,9 @@ public class BeerRecipe implements IModernBeerRecipe, IHistoricBeerRecipe {
 
 	@Override
 	public void setIntroductionDate(Date date) {
+		if (date == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
 		if (beerRecipeType == BeerRecipeType.MODERN) {
 			throw new RuntimeException("Not a modern beer recipe");
 		}

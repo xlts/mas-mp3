@@ -9,6 +9,9 @@ public class ServingSuggestion implements IServingSuggestion  {
 	}
 
 	public void setName(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
 		this.name = name;
 	}
 }

@@ -2,7 +2,7 @@ package mh.abstractclass;
 
 public class Yeast extends Resource {
 
-	private int yeastStorageTime = 30;
+	private final int yeastStorageTime = 30;
 	
 	public Yeast(String name) {
 		super(name);

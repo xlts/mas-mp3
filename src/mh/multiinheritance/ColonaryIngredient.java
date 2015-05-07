@@ -9,6 +9,9 @@ public class ColonaryIngredient extends Resource implements IServingSuggestion {
 	}
 
 	public void setOrigin(String origin) {
+		if (origin == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
 		this.origin = origin;
 	}
 

@@ -12,16 +12,69 @@ public abstract class Beer { //cannot be instantiated
 	
 	private BeerTarget beerTarget;
 	
-	public void transformIntoMassProducedBeer(int productionRate) {
+	public Beer(int productionRate){
+		transformIntoMassProducedBeer(productionRate);
+	}
+	
+	public Beer(String suggestedGlass, Date releasedate){
+		transformIntoSpecialtyBeer(suggestedGlass, releasedate);
+	}
+	
+	public void transformIntoMassProducedBeer(Integer productionRate) {
+		if (productionRate == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
 		this.beerTarget = new MassProducedBeer(productionRate);
 	}
 	
-	public void transformIntoSpecialtyBeer(String suggestedGlass, int suggestedServingTemperature, Date releasedate) {
-		this.beerTarget = new SpecialtyBeer(suggestedGlass, suggestedServingTemperature, releasedate);
+	public void transformIntoSpecialtyBeer(String suggestedGlass, Date releasedate) {
+		if (suggestedGlass == null || releasedate == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
+		this.beerTarget = new SpecialtyBeer(suggestedGlass, releasedate);
+	}
+	
+	public int getProductionRate() {
+		return beerTarget.getProductionRate();
+	}
+
+	public void setProductionRate(Integer productionRate) {
+		if (productionRate == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
+		beerTarget.setProductionRate(productionRate);
+	}
+	
+	
+	public String getSuggestedGlass(){
+		return beerTarget.getSuggestedGlass();
+	}
+	
+	public void setSuggestedGlass(String suggestedGlass){
+		if (suggestedGlass == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
+		beerTarget.setSuggestedGlass(suggestedGlass);
+	}
+	
+	public Date getReleaseDate() {
+		return beerTarget.getReleaseDate();
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		if (releaseDate == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
+		beerTarget.setReleaseDate(releaseDate);
 	}
 	
 	private abstract class BeerTarget {
-		
+		public abstract int getProductionRate();
+		public abstract void setProductionRate(int productionRate);
+		public abstract void setSuggestedGlass(String suggestedGlass);
+		public abstract String getSuggestedGlass();
+		public abstract Date getReleaseDate();
+		public abstract void setReleaseDate(Date releaseDate);
 	}
 	
 	private class MassProducedBeer extends BeerTarget {
@@ -31,49 +84,71 @@ public abstract class Beer { //cannot be instantiated
 			this.setProductionRate(productionRate);
 		}
 
-		private int getProductionRate() {
+		public int getProductionRate() {
 			return productionRate;
 		}
 
-		private void setProductionRate(int productionRate) {
+		public void setProductionRate(int productionRate) {
 			this.productionRate = productionRate;
+		}
+
+		@Override
+		public void setSuggestedGlass(String suggestedGlass) {
+			throw new RuntimeException("Not a specialty beer");
+		}
+
+		@Override
+		public String getSuggestedGlass() {
+			throw new RuntimeException("Not a specialty beer");
+		}
+
+		@Override
+		public Date getReleaseDate() {
+			throw new RuntimeException("Not a specialty beer");
+		}
+
+		@Override
+		public void setReleaseDate(Date releaseDate) {
+			throw new RuntimeException("Not a specialty beer");
 		}
 	}
 	
 	private class SpecialtyBeer extends BeerTarget {
 		private String suggestedGlass;
-		private int suggestedServingTemperature;
 		private Date releaseDate;
 		
-		private SpecialtyBeer(String suggestedGlass, int suggestedServingTemperature, Date releasedate) {
+		private SpecialtyBeer(String suggestedGlass, Date releasedate) {
 			this.setSuggestedGlass(suggestedGlass);
-			this.setSuggestedServingTemperature(suggestedServingTemperature);
 			this.setReleaseDate(releasedate);
 		}
 
-		private String getSuggestedGlass() {
+		public String getSuggestedGlass() {
 			return suggestedGlass;
 		}
 
-		private void setSuggestedGlass(String suggestedGlass) {
+		public void setSuggestedGlass(String suggestedGlass) {
 			this.suggestedGlass = suggestedGlass;
 		}
 
-		private int getSuggestedServingTemperature() {
-			return suggestedServingTemperature;
-		}
 
-		private void setSuggestedServingTemperature(
-				int suggestedServingTemperature) {
-			this.suggestedServingTemperature = suggestedServingTemperature;
-		}
-
-		private Date getReleaseDate() {
+		public Date getReleaseDate() {
 			return releaseDate;
 		}
 
-		private void setReleaseDate(Date releaseDate) {
+		public void setReleaseDate(Date releaseDate) {
 			this.releaseDate = releaseDate;
 		}
+
+		@Override
+		public int getProductionRate() {
+			throw new RuntimeException("Not a mass-produced beer");
+		}
+
+		@Override
+		public void setProductionRate(int productionRate) {
+			throw new RuntimeException("Not a mass-produced beer");
+			
+		}
+
 	}
 }

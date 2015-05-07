@@ -40,7 +40,10 @@ public class Beer implements IAle, ILager {
 	}
 
 	@Override
-	public void increaseFermentationTemp(int temp) {
+	public void increaseFermentationTemp(Integer temp) {
+		if (temp == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
 		if (!beerTypes.contains(BeerType.ALE)) {
 			throw new RuntimeException("Not an ale");
 		}
@@ -48,7 +51,10 @@ public class Beer implements IAle, ILager {
 	}
 
 	@Override
-	public void setLageringTime(int time) {
+	public void setLageringTime(Integer time) {
+		if (time == null) {
+			throw new IllegalArgumentException("passed a null value");
+		}
 		if (!beerTypes.contains(BeerType.LAGER)) {
 			throw new RuntimeException("Not a lager");
 		}
